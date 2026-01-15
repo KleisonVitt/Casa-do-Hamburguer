@@ -3,8 +3,8 @@ import Input from "./components/Input";
 const App = () => {
   return (
     <p className="flex gap-2 bg-black p-6">
-      <Input placeholder="E-mail" type="text" />
-      <Input placeholder="Senha" type="password" />
+      <Input name="email" placeholder="E-mail" type="text" />
+      <Input name="senha" placeholder="Senha" type="password" />
     </p>
   );
 };
