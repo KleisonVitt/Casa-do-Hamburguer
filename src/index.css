@@ -1,6 +1,13 @@
 @import "tailwindcss";
+@import url("https://fonts.googleapis.com/css2?family=Sen:wght@400..800&display=swap");
+
+* {
+  font-family: "Sen", sans-serif;
+}
 
 @theme {
   --color-primary: #f2daac;
   --color-secondary: #161410;
+
+  --color-placeholder: #32343e;
 }

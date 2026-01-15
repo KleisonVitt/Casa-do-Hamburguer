@@ -1,5 +1,11 @@
+import Input from "./components/Input";
+
 const App = () => {
-  return <div>App</div>;
+  return (
+    <p className="bg-black p-6">
+      <Input />
+    </p>
+  );
 };
 
 export default App;
