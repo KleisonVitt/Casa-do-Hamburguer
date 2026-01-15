@@ -1,9 +1,12 @@
-const Input = () => {
+import React from "react";
+
+type InputProps = React.InputHTMLAttributes<HTMLInputElement>;
+
+const Input = ({ className, ...props }: InputProps) => {
   return (
     <input
-      className="text-placeholder w-96 rounded-md bg-white px-2 py-2 text-xs outline-none"
-      placeholder="E-mail"
-      type="text"
+      {...props}
+      className={`text-placeholder w-96 rounded-md bg-white px-2 py-2 text-xs outline-none ${className ?? ""}`}
     />
   );
 };
