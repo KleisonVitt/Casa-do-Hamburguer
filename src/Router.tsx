@@ -1,5 +1,5 @@
-import Login from "./Login.tsx";
-import Register from "./Register.tsx";
+import Login from "./pages/Login.tsx";
+import Register from "./pages/Register.tsx";
 import { createBrowserRouter } from "react-router";
 
 export const Router = createBrowserRouter([
