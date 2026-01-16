@@ -7,10 +7,10 @@ import Pedidos from "./components/Pedidos.tsx";
 
 const OutletLayout = () => {
   return (
-    <>
+    <div className="flex min-h-screen flex-col bg-red-100">
       <Header />
       <Outlet />
-    </>
+    </div>
   );
 };
 
