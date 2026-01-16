@@ -55,7 +55,9 @@ const Register = () => {
         />
 
         <Button text="Criar conta" />
-        <Button text="Já tenho uma conta" variant="outline" />
+        <Link to="/login">
+          <Button text="Já tenho uma conta" variant="outline" />
+        </Link>
       </div>
     </form>
   );

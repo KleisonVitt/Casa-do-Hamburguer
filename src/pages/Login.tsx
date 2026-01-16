@@ -37,7 +37,9 @@ const Login = () => {
         />
 
         <Button text="Login" />
-        <Button text="Não tem nenhuma conta" variant="outline" />
+        <Link to="/register">
+          <Button text="Não tem nenhuma conta" variant="outline" />
+        </Link>
       </div>
     </form>
   );
