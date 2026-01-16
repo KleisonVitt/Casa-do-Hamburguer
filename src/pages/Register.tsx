@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Input from "../components/Input";
+import { Link } from "react-router";
 
 const Register = () => {
   const [name, setName] = useState("");
@@ -18,11 +19,13 @@ const Register = () => {
       onSubmit={handleSubmit}
     >
       <div className="flex flex-col justify-center gap-2">
-        <img
-          className="mx-auto mb-4 w-32"
-          src="./casa-hamburguer-logo.png"
-          alt="logo"
-        />
+        <Link to="/">
+          <img
+            className="mx-auto mb-4 w-32"
+            src="./casa-hamburguer-logo.png"
+            alt="logo"
+          />
+        </Link>
 
         <Input
           placeholder="Nome"
