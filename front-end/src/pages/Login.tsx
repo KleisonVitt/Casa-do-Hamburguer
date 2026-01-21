@@ -12,6 +12,10 @@ const Login = () => {
     e.preventDefault();
 
     try {
+      if (!email || !password) {
+        return setError("E-mail e senha são obrigatórios");
+      }
+
       const response = await fetch("http://localhost:3000/login", {
         method: "POST",
         headers: {
@@ -57,7 +61,7 @@ const Login = () => {
         <div className="mb-3 flex flex-col gap-2">
           <Input
             placeholder="E-mail"
-            type="text"
+            type="email"
             onChange={(e) => setEmail(e.target.value)}
           />
           <Input
