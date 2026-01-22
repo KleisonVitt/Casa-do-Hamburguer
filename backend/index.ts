@@ -2,6 +2,8 @@ import express, { type Request, type Response } from "express";
 import { connection } from "./src/db.js";
 import { prisma } from "./src/db.js";
 import cors from "cors";
+import bcrypt from "bcrypt";
+import { use } from "react";
 
 const app = express();
 app.use(express.json());
@@ -23,6 +25,8 @@ app.post("/register", async (req: Request, res: Response) => {
         .json({ message: "Todas as informações são obrigatórias" });
     }
 
+    const hashedPassword = await bcrypt.hash(password, 10);
+
     const user = await prisma.user.findFirst({
       where: {
         email: email,
@@ -37,7 +41,7 @@ app.post("/register", async (req: Request, res: Response) => {
       data: {
         name: name,
         email: email,
-        password: password,
+        password: hashedPassword,
         cep: cep,
       },
     });
@@ -61,7 +65,6 @@ app.post("/login", async (req: Request, res: Response) => {
     const user = await prisma.user.findFirst({
       where: {
         email: email,
-        password: password,
       },
     });
 
@@ -69,7 +72,18 @@ app.post("/login", async (req: Request, res: Response) => {
       return res.status(404).json({ message: "Usuário não encontrado" });
     }
 
-    return res.status(200).json(user);
+    const comparePassword = await bcrypt.compare(password, user.password);
+
+    if (!comparePassword) {
+      return res.status(401).json({ message: "Usuário ou senha incorretos" });
+    }
+
+    return res.status(200).json({
+      id: user.id,
+      name: user.name,
+      email: user.email,
+      cep: user.cep,
+    });
   } catch (error) {
     return res.status(500).json({ message: "Erro no servidor" });
   }

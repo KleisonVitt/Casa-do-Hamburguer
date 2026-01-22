@@ -11,11 +11,12 @@ const Login = () => {
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
-    try {
-      if (!email || !password) {
-        return setError("E-mail e senha são obrigatórios");
-      }
+    if (!email || !password) {
+      setError("E-mail e senha são obrigatórios");
+      return;
+    }
 
+    try {
       const response = await fetch("http://localhost:3000/login", {
         method: "POST",
         headers: {
@@ -24,23 +25,37 @@ const Login = () => {
         body: JSON.stringify({ email, password }),
       });
 
-      if (response.status === 404) {
-        setError("Usuário não encontrado");
-      }
+      const data = await response.json();
 
-      if (response.status === 400) {
-        setError("Usuário e senha são obrigatórios");
-      }
+      switch (response.status) {
+        case 200:
+          setError("");
+          console.log("Login realizado com sucesso", data);
+          break;
 
-      if (response.status === 200) {
-        setError("");
+        case 400:
+          setError("Usuário e senha são obrigatórios");
+          break;
 
-        const data = await response.json();
-        console.log(data);
+        case 401:
+          setError("Usuário ou senha incorretos");
+          break;
+
+        case 404:
+          setError("Usuário não encontrado");
+          break;
+
+        case 500:
+          setError("Erro no servidor");
+          break;
+
+        default:
+          setError("Erro inesperado");
+          break;
       }
-    } catch (error) {
-      console.log(error);
-      return;
+    } catch (err) {
+      console.error(err);
+      setError("Não foi possível conectar ao servidor");
     }
   }
 
