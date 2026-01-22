@@ -2,7 +2,7 @@ import type { Request, Response } from "express";
 import { prisma } from "../db.js";
 import bcrypt from "bcrypt";
 
-export const login = async (req: Request, res: Response) => {
+export const register = async (req: Request, res: Response) => {
   try {
     const { name, email, password, cep } = req.body;
 
@@ -39,7 +39,7 @@ export const login = async (req: Request, res: Response) => {
   }
 };
 
-export const register = async (req: Request, res: Response) => {
+export const login = async (req: Request, res: Response) => {
   try {
     const { email, password } = req.body;
 
