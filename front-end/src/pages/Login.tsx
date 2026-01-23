@@ -9,7 +9,6 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-
   const { user, setUser } = useContext(UserContext);
 
   const navigate = useNavigate();
@@ -37,7 +36,7 @@ const Login = () => {
       switch (response.status) {
         case 200:
           setError("");
-          setUser(userData.userInfo);
+          setUser(userData);
           navigate("/");
           break;
 
