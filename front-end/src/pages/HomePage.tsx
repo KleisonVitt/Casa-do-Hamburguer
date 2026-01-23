@@ -1,10 +1,7 @@
-import { Link } from "react-router";
-
 const HomePage = () => {
   return (
     <div>
-      <Link to="/login">Login</Link>
-      <Link to="/register">Register</Link>
+      <p className="text-white">Cardapio</p>
     </div>
   );
 };
