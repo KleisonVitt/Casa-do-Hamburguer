@@ -80,10 +80,30 @@ export const login = async (req: Request, res: Response) => {
     const token = jwt.sign(userInfo, process.env.JWT_SECRET);
 
     res.cookie("user", token, {
-      maxAge: 30 * 1000,
+      maxAge: 18000000,
     });
 
     return res.status(200).json(userInfo);
+  } catch (error) {
+    return res.status(500).json({ message: "Erro no servidor" });
+  }
+};
+
+export const auth = async (req: Request, res: Response) => {
+  try {
+    const token = req.cookies.user;
+
+    if (!process.env.JWT_SECRET) {
+      return;
+    }
+
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+    if (!decoded) {
+      res.status(401).json({ message: "Usuário não autorizado" });
+    }
+
+    res.status(200).json(decoded);
   } catch (error) {
     return res.status(500).json({ message: "Erro no servidor" });
   }

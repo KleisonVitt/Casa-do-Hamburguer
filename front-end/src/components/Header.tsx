@@ -1,16 +1,34 @@
 import { Link, useLocation } from "react-router";
 import { UserContext } from "../context/UserContext";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { LogOut, ShoppingCart, Box, LayoutDashboard, Plus } from "lucide-react";
 
 const Header = () => {
-  const { user } = useContext(UserContext);
+  const { user, setUser } = useContext(UserContext);
   const location = useLocation();
 
-  const getNavItemClass = (path: string) => {
-    const baseClass =
-      "flex h-[35px] w-[35px] cursor-pointer items-center justify-center rounded-md border border-white";
+  const handleAuthUser = async () => {
+    const response = await fetch("http://localhost:3000/me", {
+      credentials: "include",
+    });
 
+    if (!response.ok) {
+      console.log("deu ruim");
+      return;
+    }
+
+    const data = await response.json();
+    setUser(data);
+  };
+
+  useEffect(() => {
+    handleAuthUser();
+  }, []);
+
+  const baseClass =
+    "flex h-[35px] w-[35px] cursor-pointer items-center justify-center rounded-md border border-white";
+
+  const getNavItemClass = (path: string) => {
     return location.pathname === path
       ? `${baseClass} text-secondary bg-aux`
       : baseClass;
@@ -39,7 +57,7 @@ const Header = () => {
               </Link>
 
               <Link to={""}>
-                <div className={getNavItemClass("/teste")}>
+                <div className={baseClass}>
                   <Plus />
                 </div>
               </Link>
