@@ -108,3 +108,19 @@ export const auth = async (req: Request, res: Response) => {
     return res.status(500).json({ message: "Erro no servidor" });
   }
 };
+
+export const logout = async (req: Request, res: Response) => {
+  try {
+    const { user } = req.cookies;
+
+    if (user) {
+      res.clearCookie("user");
+      res.json({ message: "Usuário deslogado" });
+    }
+
+    console.log(user);
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ message: "Erro no servidor" });
+  }
+};

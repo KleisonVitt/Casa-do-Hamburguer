@@ -1,29 +1,52 @@
 import { Link, useLocation } from "react-router";
 import { UserContext } from "../context/UserContext";
-import { useContext, useEffect } from "react";
+import { useCallback, useContext, useEffect } from "react";
 import { LogOut, ShoppingCart, Box, LayoutDashboard, Plus } from "lucide-react";
 
 const Header = () => {
   const { user, setUser } = useContext(UserContext);
   const location = useLocation();
 
-  const handleAuthUser = async () => {
-    const response = await fetch("http://localhost:3000/me", {
-      credentials: "include",
-    });
+  const handleAuthUser = useCallback(async () => {
+    try {
+      const response = await fetch("http://localhost:3000/me", {
+        credentials: "include",
+      });
 
-    if (!response.ok) {
-      console.log("deu ruim");
+      if (!response.ok) {
+        console.log("deu ruim");
+        return;
+      }
+
+      const data = await response.json();
+      setUser(data);
+    } catch (error) {
+      console.log(error);
+    }
+  }, [setUser]);
+
+  const handleLogout = async () => {
+    try {
+      const response = await fetch("http://localhost:3000/logout", {
+        method: "POST",
+        credentials: "include",
+      });
+
+      if (!response.ok) {
+        console.log("Não deu certo");
+        return;
+      }
+
+      setUser(null);
+    } catch (error) {
+      console.log(error);
       return;
     }
-
-    const data = await response.json();
-    setUser(data);
   };
 
   useEffect(() => {
     handleAuthUser();
-  }, []);
+  }, [handleAuthUser]);
 
   const baseClass =
     "flex h-[35px] w-[35px] cursor-pointer items-center justify-center rounded-md border border-white";
@@ -72,7 +95,11 @@ const Header = () => {
 
             <div className="flex items-center gap-2">
               <p>{user.name}</p>
-              <LogOut className="cursor-pointer" size={20} />
+              <LogOut
+                className="cursor-pointer"
+                size={20}
+                onClick={() => handleLogout()}
+              />
             </div>
           </div>
         ) : (
