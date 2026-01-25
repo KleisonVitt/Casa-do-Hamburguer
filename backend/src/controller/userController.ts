@@ -91,19 +91,9 @@ export const login = async (req: Request, res: Response) => {
 
 export const auth = async (req: Request, res: Response) => {
   try {
-    const token = req.cookies.user;
+    const { user } = req;
 
-    if (!process.env.JWT_SECRET) {
-      return;
-    }
-
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
-
-    if (!decoded) {
-      res.status(401).json({ message: "Usuário não autorizado" });
-    }
-
-    res.status(200).json(decoded);
+    res.status(200).json(user);
   } catch (error) {
     return res.status(500).json({ message: "Erro no servidor" });
   }
@@ -114,11 +104,8 @@ export const logout = async (req: Request, res: Response) => {
     const { user } = req.cookies;
 
     if (user) {
-      res.clearCookie("user");
-      res.json({ message: "Usuário deslogado" });
+      res.clearCookie("user").json({ message: "Usuário deslogado" });
     }
-
-    console.log(user);
   } catch (error) {
     console.log(error);
     return res.status(500).json({ message: "Erro no servidor" });
