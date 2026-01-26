@@ -69,10 +69,10 @@ const Login = () => {
 
   return (
     <form
-      className="bg-secondary flex h-screen items-center justify-center"
       onSubmit={handleSubmit}
+      className="bg-secondary flex min-h-screen items-center justify-center overflow-x-hidden px-4"
     >
-      <div className="flex flex-col justify-center gap-2">
+      <div className="flex w-full max-w-sm flex-col gap-4">
         <Link to="/">
           <img
             className="mx-auto mb-4 w-32"

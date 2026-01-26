@@ -1,5 +1,3 @@
-import React from "react";
-
 const Input = ({
   className,
   ...props
@@ -7,7 +5,7 @@ const Input = ({
   return (
     <input
       {...props}
-      className={`text-placeholder placeholder:text-placeholder w-96 rounded-md bg-white px-2 py-3 text-xs outline-none ${className ?? ""}`}
+      className={`text-placeholder placeholder:text-placeholder box-border w-full rounded-md bg-white px-3 py-3 text-sm outline-none ${className ?? ""} `}
     />
   );
 };
