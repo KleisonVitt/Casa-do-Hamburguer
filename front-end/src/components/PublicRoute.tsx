@@ -1,21 +1,14 @@
-import { useEffect, type ReactNode } from "react";
-import { useNavigate } from "react-router";
+import { Navigate } from "react-router";
+import { type ReactNode } from "react";
 
 const PublicRoute = ({ children }: { children: ReactNode }) => {
-  const navigate = useNavigate();
+  const cookies = document.cookie.split("; ");
+  const userCookie = cookies.find((c) => c.startsWith("user="));
 
-  useEffect(() => {
-    const cookie = document.cookie;
-
-    if (cookie) {
-      const cookies = cookie.split("; ");
-      const userCokie = cookies.find((c) => c.startsWith("user="));
-
-      if (userCokie) {
-        navigate("/", { replace: true });
-      }
-    }
-  }, [navigate]);
+  // verifica se o usuario esta logado por meio dos cookies e redireciona para a pagina Home
+  if (userCookie) {
+    return <Navigate to="/" replace />;
+  }
 
   return <>{children}</>;
 };
