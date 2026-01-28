@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Product from "../components/Product";
 
 const HomePage = () => {
   const [category, setCategory] = useState("Hamburguer");
@@ -22,7 +23,7 @@ const HomePage = () => {
   };
 
   return (
-    <div className="mx-auto w-full px-4 md:max-w-4xl md:px-0">
+    <div className="mx-auto w-full px-4 md:max-w-4xl">
       <div className="flex gap-2 py-4">
         <div
           className={getClassCategory("Hamburguer")}
@@ -37,11 +38,18 @@ const HomePage = () => {
           Bebidas
         </div>
         <div
-          className={getClassCategory("Porcoes")}
-          onClick={() => handleChangeCategory("Porcoes")}
+          className={getClassCategory("Porções")}
+          onClick={() => handleChangeCategory("Porções")}
         >
           Porçoes
         </div>
+      </div>
+
+      <p className="text-aux mb-3 text-xl font-bold uppercase">{category}</p>
+      <div className="space-y-3 md:space-y-5">
+        <Product />
+        <Product />
+        <Product />
       </div>
     </div>
   );

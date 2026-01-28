@@ -58,7 +58,7 @@ const Header = () => {
   };
 
   return (
-    <header className="mx-auto w-full px-4 pt-4 md:max-w-4xl md:px-0 md:pt-4">
+    <header className="mx-auto w-full px-4 pt-4 md:max-w-4xl md:pt-4">
       <div className="flex items-center justify-between">
         <Link to={"/"}>
           <img src="casa-hamburguer-logo.png" alt="logo casa hamburguer" />
@@ -106,7 +106,7 @@ const Header = () => {
           </div>
         ) : (
           <Link to="/login">
-            <button className="bg-primary cursor-pointer rounded px-5 py-2 font-medium sm:px-6 sm:py-2.5 md:px-9 md:py-2">
+            <button className="bg-primary cursor-pointer rounded px-6 py-1 font-medium md:px-9 md:py-2">
               Entrar
             </button>
           </Link>
