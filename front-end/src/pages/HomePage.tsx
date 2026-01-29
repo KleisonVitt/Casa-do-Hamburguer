@@ -1,8 +1,10 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Product from "../components/Product";
+import type { ProductType } from "../types/Product";
 
 const HomePage = () => {
   const [category, setCategory] = useState("Hamburguer");
+  const [products, setProducts] = useState<ProductType[]>([]);
 
   const handleChangeCategory = (newCategory: string) => {
     setCategory(newCategory);
@@ -21,6 +23,21 @@ const HomePage = () => {
 
     return notSelectedCategoryClass;
   };
+
+  useEffect(() => {
+    const getProducts = async () => {
+      try {
+        const response = await fetch("http://localhost:3000/product");
+
+        const data = await response.json();
+        setProducts(data);
+      } catch (error) {
+        return console.log(error);
+      }
+    };
+
+    getProducts();
+  }, []);
 
   return (
     <div className="mx-auto w-full px-4 md:max-w-4xl">
@@ -45,11 +62,18 @@ const HomePage = () => {
         </div>
       </div>
 
-      <p className="text-aux mb-3 text-xl font-bold uppercase">{category}</p>
+      <p className="text-aux mb-2 text-xl font-bold uppercase">{category}</p>
       <div className="space-y-3 md:space-y-5">
-        <Product />
-        <Product />
-        <Product />
+        {products.map((product) => (
+          <Product
+            key={product.id}
+            id={product.id}
+            name={product.name}
+            description={product.description}
+            price={product.price}
+            img={product.img}
+          />
+        ))}
       </div>
     </div>
   );

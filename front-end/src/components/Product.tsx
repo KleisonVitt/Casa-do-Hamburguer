@@ -1,22 +1,21 @@
 import { ShoppingBag } from "lucide-react";
+import type { ProductType } from "../types/Product";
+import { brlFormatter } from "../utils/brlFormatter";
 
-const Product = () => {
+const Product = ({ id, name, description, price, img }: ProductType) => {
   return (
-    <div className="">
-      <div className="flex gap-2 text-white">
-        <img className="max-w-25 md:max-w-50" src="./1DuploDaCasa.png" alt="" />
-        <div className="flex flex-col">
-          <p className="text-xs font-bold uppercase md:text-lg">
-            Duplo da casa
-          </p>
-          <p className="text-gray-text flex-1 text-xs md:text-lg">
-            Dois suculentos hambúrgueres de 120g, queijo cheddar derretido,
-            maionese da casa e picles no pão brioche tostado.
-          </p>
-          <div className="flex items-center justify-end gap-2">
-            <span className="text-aux text-sm font-bold">R$28,90</span>
-            <ShoppingBag className="cursor-pointer" size={18} />
-          </div>
+    <div className="flex gap-2 text-white">
+      <img className="max-w-25 md:max-w-50" src={`./${img}`} alt="" />
+      <div className="flex w-full flex-col">
+        <p className="text-xs font-bold uppercase md:text-lg">{name}</p>
+        <p className="text-gray-text flex-1 text-xs md:text-lg">
+          {description}
+        </p>
+        <div className="flex items-center justify-end gap-2">
+          <span className="text-aux text-sm font-bold">
+            {brlFormatter(price)}
+          </span>
+          <ShoppingBag className="cursor-pointer" size={18} />
         </div>
       </div>
     </div>

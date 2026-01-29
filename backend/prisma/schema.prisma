@@ -15,3 +15,12 @@ model User {
   cep      String
   password String
 }
+
+model Product {
+  id          String   @id @default(cuid())
+  name        String
+  description String
+  price       Int
+  img         String
+  createdAt   DateTime @default(now())
+}
