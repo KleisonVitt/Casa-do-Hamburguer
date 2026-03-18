@@ -24,6 +24,10 @@ const HomePage = () => {
     return notSelectedCategoryClass;
   };
 
+  const filteredProducts = products.filter((product) => {
+    return product.category === category;
+  });
+
   useEffect(() => {
     const getProducts = async () => {
       try {
@@ -58,22 +62,26 @@ const HomePage = () => {
           className={getClassCategory("Porções")}
           onClick={() => handleChangeCategory("Porções")}
         >
-          Porçoes
+          Porções
         </div>
       </div>
 
       <p className="text-aux mb-2 text-xl font-bold uppercase">{category}</p>
       <div className="space-y-3 md:space-y-5">
-        {products.map((product) => (
+        {filteredProducts.map((product) => (
           <Product
             key={product.id}
             id={product.id}
             name={product.name}
             description={product.description}
+            category={product.category}
             price={product.price}
             img={product.img}
           />
         ))}
+        {filteredProducts.length === 0 && (
+          <p className="text-white">Ainda não há produtos</p>
+        )}
       </div>
     </div>
   );
