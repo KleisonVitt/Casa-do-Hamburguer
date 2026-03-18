@@ -15,3 +15,43 @@ export const getAllProducts = async (req: Request, res: Response) => {
     return res.status(500).json({ message: "Erro no servidor" });
   }
 };
+
+export const deleteProduct = async (
+  req: Request<{ id: string }>,
+  res: Response,
+) => {
+  try {
+    const { user } = req;
+
+    if (!user?.admin) {
+      res.status(403).json({
+        message: "Usuário não autorizado.",
+      });
+      return;
+    }
+
+    const { id } = req.params;
+
+    if (!id) {
+      res.status(400).json({ message: "ID não encontrado." });
+      return;
+    }
+
+    const deletedProduct = await prisma.product.delete({
+      where: {
+        id: id,
+      },
+    });
+
+    res.json(id);
+  } catch (error: any) {
+    if (error.code === "P2025") {
+      console.error(error);
+      res.json({ message: "Produto não encontrado." });
+      return;
+    }
+
+    res.status(500).json({ message: "Erro no servidor" });
+    return;
+  }
+};

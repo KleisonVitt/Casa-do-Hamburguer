@@ -77,6 +77,7 @@ const HomePage = () => {
             category={product.category}
             price={product.price}
             img={product.img}
+            setProducts={setProducts}
           />
         ))}
         {filteredProducts.length === 0 && (
