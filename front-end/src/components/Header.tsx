@@ -1,9 +1,11 @@
 import { Link, useLocation } from "react-router";
 import { UserContext } from "../context/UserContext";
-import { useCallback, useContext, useEffect } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import { LogOut, ShoppingCart, Box, LayoutDashboard, Plus } from "lucide-react";
+import Cart from "./Cart";
 
 const Header = () => {
+  const [showCart, setShowCart] = useState(false);
   const { user, setUser } = useContext(UserContext);
   const location = useLocation();
 
@@ -59,6 +61,7 @@ const Header = () => {
 
   return (
     <header className="mx-auto w-full px-4 pt-4 md:max-w-4xl md:pt-4">
+      {showCart && <Cart setShowCart={setShowCart} />}
       <div className="flex items-center justify-between">
         <Link to={"/"}>
           <img src="casa-hamburguer-logo.png" alt="logo casa hamburguer" />
@@ -89,7 +92,7 @@ const Header = () => {
             )}
 
             <div className="relative cursor-pointer">
-              <ShoppingCart />
+              <ShoppingCart onClick={() => setShowCart((prev) => !prev)} />
               <p className="bg-aux text-secondary absolute -top-4 -right-4 flex h-5 w-5 items-center justify-center rounded-full text-sm font-bold">
                 1
               </p>
